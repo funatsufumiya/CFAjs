@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>squares</title>
+	<script src="../CFA.js"></script>
+
+	<style>
+		html {
+			overflow: hidden;
+			touch-action: none;
+			content-zooming: none;
+		}
+		body {
+			position: absolute;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			background:#222;
+		}
+		canvas {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+		#generate {
+			position: absolute;
+			margin: 10px;
+			z-index: 1000;
+			cursor: pointer;
+			background: #F80;
+			line-height: 35px;
+			border: none;
+			outline: none;
+			color: #830;
+			font-size: 1em;
+			border-radius: 5px;
+		}
+		#generate:hover {
+			background: #a40;
+			color: #ff0;
+		}
+	</style>
+</head>
+<body onload="drawit();">
+	<input id="generate" type="button" value="Generate!">
+
+	<script>
+		function drawit(){
+			var code = {
+				setup: {
+					background: '#000000',
+					minimumSize: 1,
+					globalScale: "=window.innerHeight/40",
+					globalCompositeOperation: "source-over",
+					pan: false
+				},
+				startShape: 'start',
+				start: {
+					shapes: [
+						{ shape: "hexa", x: -8, y: 12 }
+					]
+				},
+
+				hexa: {
+					shapes: [
+						{
+							loop: {
+								iter: 6, x: 16, rotate: 60,
+								shapes: [
+									{ shape: "combi" }
+								]
+							}
+						}
+					]
+				},
+
+				combi: {
+					shapes: [
+						{
+							loop: {
+								iter: 6, x: 8, rotate: 60,
+								shapes: [
+									{ shape: "rings" }
+								]
+							}
+						}
+					]
+				},
+
+				rings: {
+					shapes: [
+						{ shape: "ring", hue: 0, saturation: 0.5, light: 0.5, alpha: -0.3, rotate: 60 },
+						{ shape: "ring", hue: 60, saturation: 0.5, light: 0.5, alpha: -0.3, rotate: -60 },
+						{ shape: "ring", hue: 120, saturation: 0.5, light: 0.5, alpha: -0.3, rotate: 180 }
+					]
+				},
+
+				ring: {
+					loop: {
+						iter: 24, y: 0.4, rotate: -15,
+						shapes: [
+							{ shape: "sq", scale: 0.6 }
+						]
+					}
+				},
+
+				sq: {
+					shapes: [
+						{ shape: "SQUARE" }
+					]
+				}
+
+			};
+
+			document.getElementById( "generate" ).onclick = CFAjs.render;
+
+			CFAjs.init();
+			CFAjs.render( code );
+		}
+	</script>
+</body>
+</html>
