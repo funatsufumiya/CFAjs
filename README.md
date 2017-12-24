@@ -6,4 +6,4 @@
 
 ## examples
 
-See [examples](examples/index.html).
+See [examples](examples).
