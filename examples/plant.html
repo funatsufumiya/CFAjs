@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>squares</title>
+	<script src="../CFA.js"></script>
+
+	<style>
+		html {
+			overflow: hidden;
+			touch-action: none;
+			content-zooming: none;
+		}
+		body {
+			position: absolute;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			background:#222;
+		}
+		canvas {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+		#generate {
+			position: absolute;
+			margin: 10px;
+			z-index: 1000;
+			cursor: pointer;
+			background: #F80;
+			line-height: 35px;
+			border: none;
+			outline: none;
+			color: #830;
+			font-size: 1em;
+			border-radius: 5px;
+		}
+		#generate:hover {
+			background: #a40;
+			color: #ff0;
+		}
+	</style>
+</head>
+<body onload="drawit();">
+	<input id="generate" type="button" value="Generate!">
+
+	<script>
+		function drawit(){
+			var code = {
+				setup: {
+					background: '#000000',
+					minimumSize: 10,
+					globalScale: "=window.innerHeight/4",
+					globalCompositeOperation: "source-over",
+					seed: 57196625,
+					pan: false
+				},
+				startShape: 'start',
+				start: {
+					shapes: [
+						{ shape: 'plant', y: 1 }
+					]
+				},
+				plant: {
+					shapes: [
+						// { shape: "leaf_l", light: 0.5, setHue: 100, saturation: 0.2},
+						{
+							loop: {
+								iter: 3,
+								shapes: [
+									{ shape: "stem", light: 0.5, setHue: 70, saturation: 0.2},
+								]
+							}
+						},
+						{
+							loop: {
+								iter: 15,
+								shapes: [
+									{ shape: "leaf_rand", light: 0.5, setHue: 100, saturation: 0.2},
+								]
+							}
+						}
+						// { shape: "leaf_rand", light: 0.5, setHue: 100, saturation: 0.2}
+					]
+				},
+
+				stem: {
+					shapes: [
+						{
+							loop: {
+								iter: 40, x: 0, y: -0.1,
+								saturation: 0.1, light: 0.1,
+								rotate: "=25 - rnd()*50", scale: [ 0.9, 1 ], 
+								shapes: [
+									{ shape: "rect_stem" }
+								]
+							}
+						}
+						// { shape: "sq", scale: 0.85, rotate: -3, light: -0.1 }
+					]
+				},
+
+				leaf_r: {
+					shapes: [
+						{
+							loop: {
+								iter: 14, x: 0.1, y: -0.1,
+								saturation: 0.1, light: 0.1,
+								rotate: -10, scale: [ 0.8, 1 ], 
+								shapes: [
+									{ shape: "rect" }
+								]
+							}
+						}
+						// { shape: "sq", scale: 0.85, rotate: -3, light: -0.1 }
+					]
+				},
+
+				leaf_l: {
+					shapes: [
+						{
+							loop: {
+								iter: 14, x: -0.1, y: -0.1,
+								saturation: 0.1, light: 0.1,
+								rotate: 10, scale: [ 0.8, 1 ], 
+								shapes: [
+									{ shape: "rect" }
+								]
+							}
+						}
+						// { shape: "sq", scale: 0.85, rotate: -3, light: -0.1 }
+					]
+				},
+
+				leaf_rand: {
+					shapes: [
+						{
+							loop: {
+								iter: 13, x: 0, y: -0.1,
+								saturation: 0.1, light: 0.1,
+								rotate: "=35 - rnd()*70", scale: [ 0.8, 1 ], 
+								shapes: [
+									{ shape: "rect" }
+								]
+							}
+						}
+						// { shape: "sq", scale: 0.85, rotate: -3, light: -0.1 }
+					]
+				},
+
+				rect: {
+					shapes: [
+						{ shape: "SQUARE", scale: [ 0.6, 0.2 ] }
+					]
+				},
+
+				rect_stem: {
+					shapes: [
+						{ shape: "SQUARE", scale: [ 0.3, 0.2 ] }
+					]
+				}
+
+			};
+
+			document.getElementById( "generate" ).onclick = CFAjs.render;
+
+			CFAjs.init();
+			CFAjs.render( code );
+		}
+	</script>
+</body>
+</html>
