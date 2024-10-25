@@ -8,4 +8,4 @@
 
 See [examples](examples).
 
-[live demo](https://cdn.rawgit.com/funatsufumiya/CFAjs/2e24ced1/examples/index.html)
+[live demo](https://funatsufumiya.github.io/CFAjs/examples/index.html)
